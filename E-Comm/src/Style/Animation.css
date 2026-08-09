@@ -1,0 +1,23 @@
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(-5deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(-5deg);
+  }
+}
+
+.shoe-animation {
+  animation: float 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.shoe-animation:hover {
+  transform: scale(1.08);
+}
