@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+const API = import.meta.env.VITE_API_URL;
 
 export default function Payment() {
     const { state } = useLocation();
@@ -48,7 +49,7 @@ export default function Payment() {
 
             // Create Razorpay Order
             const { data } = await axios.post(
-                "http://localhost:3002/api/paymentverify/create-order",
+                `${API}/api/paymentverify/create-order`,
                 {
                     amount: total,
                 },
@@ -108,7 +109,7 @@ export default function Payment() {
 
                         // Verify Payment
                         const verify = await axios.post(
-                            "http://localhost:3002/api/paymentverify/verify",
+                            `${API}/api/paymentverify/verify`,
 
                             {
                                 product: state.product,
@@ -234,7 +235,7 @@ export default function Payment() {
             }
 
             const { data } = await axios.post(
-                "http://localhost:3002/api/stripe/create-session",
+                `${API}/api/stripe/create-session`,
 
                 {
                     product: state.product,
@@ -283,7 +284,7 @@ export default function Payment() {
             }
 
             const { data } = await axios.post(
-                "http://localhost:3002/api/order/cod",
+                `${API}/api/order/cod`,
 
                 {
                     product: state.product,

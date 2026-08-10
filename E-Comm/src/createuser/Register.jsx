@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"; // use to change page
 import shoes from "../assets/pumashoes.jpg"; // picture
 import "../Style/Animation.css";
 import Toast from "../Toast";
+const API = import.meta.env.VITE_API_URL;
 
 function Register() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function Register() {
 
     try {
       await axios.post(
-        "http://localhost:3002/api/auth/register",
+        `${API}/api/auth/register`,
         formData  
       );
 

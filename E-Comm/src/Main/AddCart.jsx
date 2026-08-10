@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "../component/Navbar";
 import { useParams } from "react-router-dom";
 import OtherProducts from "../component/getOtherProduct";
-
+const API = import.meta.env.VITE_API_URL;
 import {
   Trash2,
   Pencil,
@@ -37,7 +37,7 @@ function AddCart() {
     const fetchProduct = async () => {
       try {
         const res = await axios.post(
-          `http://localhost:3002/api/product/addcart/${id}`,
+          `${API}/api/product/addcart/${id}`,
           {},
           {
             headers: {

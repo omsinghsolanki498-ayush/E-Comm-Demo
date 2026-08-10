@@ -3,6 +3,7 @@ import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
+const API = import.meta.env.VITE_API_URL;
 
 function Login() {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ function Login() {
       console.log("SENDING LOGIN REQUEST...");
 
       const res = await axios.post(
-        "http://localhost:3002/api/auth/login",
+        `${API}/api/auth/login`,
         {
           email,
           password,

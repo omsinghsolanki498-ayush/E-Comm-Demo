@@ -4,6 +4,7 @@ import AdminNavbar from "./AdminNavbar";
 import AdminSidebar from "./AdminSidebar";
 import Tost from "../Toast";
 import toast from "react-hot-toast";
+const API = import.meta.env.VITE_API_URL;
 
 function Admin() {
   const token = localStorage.getItem("token");
@@ -39,7 +40,7 @@ function Admin() {
       data.append("category", form.category);
       data.append("image", form.image);
 
-      await axios.post("http://localhost:3002/api/product/add", data,{
+      await axios.post(`${API}/api/product/add`, data,{
         headers:{
           Authorization:`Bearer ${token}`,
           "Content-Type":"multipart/form-data",

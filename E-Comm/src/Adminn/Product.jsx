@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+const API = import.meta.env.VITE_API_URL;
 import {
   ArrowLeft,
   Edit,
@@ -29,7 +30,7 @@ function Product() {
       setLoading(true);
 
       const res = await axios.get(
-        "http://localhost:3002/api/product/all",
+        `${API}/api/product/all`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

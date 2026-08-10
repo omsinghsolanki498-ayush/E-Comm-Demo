@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import {
     Package,
     Users,
@@ -27,7 +28,7 @@ function Reveanue() {
             try {
 
                 const res = await axios.get(
-                    "http://localhost:3002/api/product/reveanue"
+                    `${API}/api/product/reveanue`
                 );
 
                 console.log(

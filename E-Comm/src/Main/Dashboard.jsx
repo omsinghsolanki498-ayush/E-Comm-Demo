@@ -4,6 +4,7 @@ import ShoeCard from "../Main/ShoeCard";
 import Navbar from "../component/Navbar";
 import Slogen from "../component/Slogen";
 import Footer from "../component/Footer";
+const API = import.meta.env.VITE_API_URL;
 
 function Dashboard() {
   const token = localStorage.getItem("token");
@@ -11,7 +12,7 @@ function Dashboard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/api/product/dashboardproduct", {
+      .get(`${API}/api/product/dashboardproduct`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

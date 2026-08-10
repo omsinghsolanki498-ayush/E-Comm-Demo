@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ShoeCard from "../Main/ShoeCard";
+const API = import.meta.env.VITE_API_URL;
 
 function getOtherProducts({ productId }) {
   const [products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ function getOtherProducts({ productId }) {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3002/api/product/other-products/${productId}`
+          `${API}/api/product/other-products/${productId}`
         );
 
         console.log(res.data);
