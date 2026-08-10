@@ -1,17 +1,26 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import Toast from "../Toast";
 
 export default function Checkout() {
-
     const navigate = useNavigate();
     const location = useLocation();
 
     if (!location.state) {
         return (
-            <div className="flex justify-center items-center h-screen text-2xl font-bold">
-                No Product Selected
+            <div className="min-h-screen flex items-center justify-center px-4 bg-gray-100">
+                <div className="text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold">
+                        No Product Selected
+                    </h2>
+                    <button
+                        onClick={() => navigate("/dashboard")}
+                        className="mt-5 bg-black text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition"
+                    >
+                        Back to Shop
+                    </button>
+                </div>
             </div>
         );
     }
@@ -78,262 +87,322 @@ export default function Checkout() {
     return (
         <>
             <Toast />
-            <div className="min-h-screen bg-gray-100 py-8 px-4">
-                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                    {/* ================= LEFT ================= */}
+            <div className="min-h-screen bg-gray-100 py-5 sm:py-8 lg:py-10 px-3 sm:px-5 lg:px-8">
+                <div className="max-w-7xl mx-auto">
 
-                    <div className="lg:col-span-2 bg-white rounded-3xl shadow-lg p-6 md:p-10">
-
-                        <h1 className="text-3xl md:text-4xl font-bold mb-8">
-                            Delivery Information
+                    {/* PAGE TITLE */}
+                    <div className="mb-5 sm:mb-8">
+                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+                            Checkout
                         </h1>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-                            <input
-                                type="text"
-                                name="firstName"
-                                placeholder="First Name"
-                                value={form.firstName}
-                                onChange={change}
-                                className="border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <input
-                                type="text"
-                                name="lastName"
-                                placeholder="Last Name"
-                                value={form.lastName}
-                                onChange={change}
-                                className="border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                value={form.email}
-                                onChange={change}
-                                className="md:col-span-2 border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <input
-                                type="text"
-                                name="street"
-                                placeholder="Street Address"
-                                value={form.street}
-                                onChange={change}
-                                className="md:col-span-2 border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <input
-                                type="text"
-                                name="city"
-                                placeholder="City"
-                                value={form.city}
-                                onChange={change}
-                                className="border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <input
-                                type="text"
-                                name="state"
-                                placeholder="State"
-                                value={form.state}
-                                onChange={change}
-                                className="border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <input
-                                type="text"
-                                name="zip"
-                                placeholder="Zip Code"
-                                value={form.zip}
-                                onChange={change}
-                                className="border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <input
-                                type="text"
-                                name="country"
-                                placeholder="Country"
-                                value={form.country}
-                                onChange={change}
-                                className="border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <input
-                                type="text"
-                                name="phone"
-                                placeholder="Phone Number"
-                                value={form.phone}
-                                onChange={change}
-                                className="md:col-span-2 border rounded-xl p-4 outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                        </div>
-
+                        <p className="text-gray-500 text-sm sm:text-base mt-1">
+                            Complete your delivery and payment details
+                        </p>
                     </div>
 
-                    {/* ================= RIGHT ================= */}
+                    {/* MAIN GRID */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-7 lg:gap-8">
 
-                    <div className="bg-white rounded-3xl shadow-lg p-6 sticky top-6 h-fit">
+                        {/* ================= LEFT - DELIVERY ================= */}
+                        <div className="lg:col-span-2 bg-white rounded-2xl sm:rounded-3xl shadow-md sm:shadow-lg p-4 sm:p-6 md:p-8 lg:p-10">
 
-                        <h2 className="text-2xl font-bold mb-6">
-                            Order Summary
-                        </h2>
+                            <div className="mb-6 sm:mb-8">
+                                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold">
+                                    Delivery Information
+                                </h2>
 
-                        {/* Product */}
-
-                        <div className="flex gap-4 border-b pb-5">
-
-                            <img
-                                src={product.image}
-                                alt={product.name}
-                                className="w-24 h-24 rounded-xl object-cover"
-                            />
-
-                            <div className="flex-1">
-
-                                <h3 className="font-bold text-lg">
-                                    {product.name}
-                                </h3>
-
-                                <p className="text-gray-500">
-                                    Size : {size}
+                                <p className="text-gray-500 text-sm mt-1">
+                                    Enter your delivery details
                                 </p>
-
-                                <p className="text-gray-500">
-                                    Qty : {quantity}
-                                </p>
-
-                                <p className="font-bold mt-2">
-                                    ₹{product.price}
-                                </p>
-
                             </div>
 
+                            {/* FORM */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+
+                                {/* FIRST NAME */}
+                                <input
+                                    type="text"
+                                    name="firstName"
+                                    placeholder="First Name"
+                                    value={form.firstName}
+                                    onChange={change}
+                                    className="w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+
+                                {/* LAST NAME */}
+                                <input
+                                    type="text"
+                                    name="lastName"
+                                    placeholder="Last Name"
+                                    value={form.lastName}
+                                    onChange={change}
+                                    className="w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+
+                                {/* EMAIL */}
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email Address"
+                                    value={form.email}
+                                    onChange={change}
+                                    className="sm:col-span-2 w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+
+                                {/* STREET */}
+                                <input
+                                    type="text"
+                                    name="street"
+                                    placeholder="Street Address"
+                                    value={form.street}
+                                    onChange={change}
+                                    className="sm:col-span-2 w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+
+                                {/* CITY */}
+                                <input
+                                    type="text"
+                                    name="city"
+                                    placeholder="City"
+                                    value={form.city}
+                                    onChange={change}
+                                    className="w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+
+                                {/* STATE */}
+                                <input
+                                    type="text"
+                                    name="state"
+                                    placeholder="State"
+                                    value={form.state}
+                                    onChange={change}
+                                    className="w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+
+                                {/* ZIP */}
+                                <input
+                                    type="text"
+                                    name="zip"
+                                    placeholder="Zip Code"
+                                    value={form.zip}
+                                    onChange={change}
+                                    className="w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+
+                                {/* COUNTRY */}
+                                <input
+                                    type="text"
+                                    name="country"
+                                    placeholder="Country"
+                                    value={form.country}
+                                    onChange={change}
+                                    className="w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+
+                                {/* PHONE */}
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    placeholder="Phone Number"
+                                    value={form.phone}
+                                    onChange={change}
+                                    className="sm:col-span-2 w-full border border-gray-300 rounded-xl px-4 py-3.5 sm:py-4 text-sm sm:text-base outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+                                />
+                            </div>
+
+                            {/* MOBILE PAYMENT INFO */}
+                            <div className="mt-7 lg:hidden">
+                                <p className="text-sm text-gray-500">
+                                    Payment and order summary are shown below.
+                                </p>
+                            </div>
                         </div>
 
-                        {/* Price */}
+                        {/* ================= RIGHT - SUMMARY ================= */}
+                        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-md sm:shadow-lg p-4 sm:p-6 h-fit lg:sticky lg:top-6">
 
-                        <div className="space-y-4 py-6">
+                            <h2 className="text-xl sm:text-2xl font-bold mb-5 sm:mb-6">
+                                Order Summary
+                            </h2>
 
-                            <div className="flex justify-between">
-                                <span>Subtotal</span>
-                                <span>₹{subtotal}</span>
+                            {/* PRODUCT */}
+                            <div className="flex gap-3 sm:gap-4 border-b pb-5">
+
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover flex-shrink-0"
+                                />
+
+                                <div className="min-w-0 flex-1">
+
+                                    <h3 className="font-bold text-sm sm:text-lg line-clamp-2">
+                                        {product.name}
+                                    </h3>
+
+                                    <p className="text-gray-500 text-xs sm:text-sm mt-1">
+                                        Size: {size}
+                                    </p>
+
+                                    <p className="text-gray-500 text-xs sm:text-sm">
+                                        Qty: {quantity}
+                                    </p>
+
+                                    <p className="font-bold text-sm sm:text-base mt-1">
+                                        ₹{product.price}
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="flex justify-between">
-                                <span>Delivery</span>
-                                <span>₹{delivery}</span>
+                            {/* PRICE */}
+                            <div className="space-y-3 sm:space-y-4 py-5 sm:py-6">
+
+                                <div className="flex justify-between text-sm sm:text-base">
+                                    <span className="text-gray-600">
+                                        Subtotal
+                                    </span>
+
+                                    <span className="font-medium">
+                                        ₹{subtotal}
+                                    </span>
+                                </div>
+
+                                <div className="flex justify-between text-sm sm:text-base">
+                                    <span className="text-gray-600">
+                                        Delivery
+                                    </span>
+
+                                    <span className="font-medium">
+                                        ₹{delivery}
+                                    </span>
+                                </div>
+
+                                <hr />
+
+                                <div className="flex justify-between items-center">
+                                    <span className="text-lg sm:text-xl font-bold">
+                                        Total
+                                    </span>
+
+                                    <span className="text-xl sm:text-2xl font-bold">
+                                        ₹{total}
+                                    </span>
+                                </div>
                             </div>
 
-                            <hr />
+                            {/* PAYMENT METHOD */}
+                            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">
+                                Payment Method
+                            </h3>
 
-                            <div className="flex justify-between text-2xl font-bold">
-                                <span>Total</span>
-                                <span>₹{total}</span>
+                            <div className="space-y-3">
+
+                                {/* STRIPE */}
+                                <label
+                                    className={`flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl border cursor-pointer transition ${
+                                        paymentMethod === "stripe"
+                                            ? "border-black bg-gray-100"
+                                            : "border-gray-300 hover:border-black"
+                                    }`}
+                                >
+                                    <div className="min-w-0">
+                                        <p className="font-semibold text-sm sm:text-base">
+                                            Stripe
+                                        </p>
+
+                                        <p className="text-xs sm:text-sm text-gray-500">
+                                            Credit / Debit Card
+                                        </p>
+                                    </div>
+
+                                    <input
+                                        type="radio"
+                                        value="stripe"
+                                        checked={paymentMethod === "stripe"}
+                                        onChange={(e) =>
+                                            setPaymentMethod(e.target.value)
+                                        }
+                                        className="w-4 h-4 accent-black"
+                                    />
+                                </label>
+
+                                {/* RAZORPAY */}
+                                <label
+                                    className={`flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl border cursor-pointer transition ${
+                                        paymentMethod === "razorpay"
+                                            ? "border-black bg-gray-100"
+                                            : "border-gray-300 hover:border-black"
+                                    }`}
+                                >
+                                    <div className="min-w-0">
+                                        <p className="font-semibold text-sm sm:text-base">
+                                            Razorpay
+                                        </p>
+
+                                        <p className="text-xs sm:text-sm text-gray-500">
+                                            UPI / Cards / Wallet
+                                        </p>
+                                    </div>
+
+                                    <input
+                                        type="radio"
+                                        value="razorpay"
+                                        checked={paymentMethod === "razorpay"}
+                                        onChange={(e) =>
+                                            setPaymentMethod(e.target.value)
+                                        }
+                                        className="w-4 h-4 accent-black"
+                                    />
+                                </label>
+
+                                {/* COD */}
+                                <label
+                                    className={`flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl border cursor-pointer transition ${
+                                        paymentMethod === "cod"
+                                            ? "border-black bg-gray-100"
+                                            : "border-gray-300 hover:border-black"
+                                    }`}
+                                >
+                                    <div className="min-w-0">
+                                        <p className="font-semibold text-sm sm:text-base">
+                                            Cash On Delivery
+                                        </p>
+
+                                        <p className="text-xs sm:text-sm text-gray-500">
+                                            Pay After Delivery
+                                        </p>
+                                    </div>
+
+                                    <input
+                                        type="radio"
+                                        value="cod"
+                                        checked={paymentMethod === "cod"}
+                                        onChange={(e) =>
+                                            setPaymentMethod(e.target.value)
+                                        }
+                                        className="w-4 h-4 accent-black"
+                                    />
+                                </label>
                             </div>
 
+                            {/* BUTTON */}
+                            <button
+                                onClick={next}
+                                disabled={loading}
+                                className="w-full mt-6 sm:mt-8 bg-black text-white py-3.5 sm:py-4 px-4 rounded-xl text-base sm:text-lg font-bold hover:bg-gray-800 active:scale-[0.98] transition disabled:bg-gray-500 disabled:cursor-not-allowed"
+                            >
+                                {loading ? "Processing..." : "PLACE ORDER"}
+                            </button>
+
+                            <p className="text-center text-xs text-gray-400 mt-3">
+                                Secure checkout • Your information is protected
+                            </p>
                         </div>
-
-                        {/* Payment */}
-
-                        <h3 className="text-xl font-bold mb-4">
-                            Payment Method
-                        </h3>
-
-                        <div className="space-y-4">
-
-                            {/* Stripe */}
-
-                            <label
-                                className={`flex justify-between items-center p-4 rounded-xl border cursor-pointer transition ${paymentMethod === "stripe"
-                                    ? "border-black bg-gray-100"
-                                    : "border-gray-300 hover:border-black"
-                                    }`}
-                            >
-                                <div>
-                                    <p className="font-semibold">Stripe</p>
-                                    <p className="text-sm text-gray-500">
-                                        Credit / Debit Card
-                                    </p>
-                                </div>
-
-                                <input
-                                    type="radio"
-                                    value="stripe"
-                                    checked={paymentMethod === "stripe"}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                />
-                            </label>
-
-                            {/* Razorpay */}
-
-                            <label
-                                className={`flex justify-between items-center p-4 rounded-xl border cursor-pointer transition ${paymentMethod === "razorpay"
-                                    ? "border-black bg-gray-100"
-                                    : "border-gray-300 hover:border-black"
-                                    }`}
-                            >
-                                <div>
-                                    <p className="font-semibold">Razorpay</p>
-                                    <p className="text-sm text-gray-500">
-                                        UPI / Cards / Wallet
-                                    </p>
-                                </div>
-
-                                <input
-                                    type="radio"
-                                    value="razorpay"
-                                    checked={paymentMethod === "razorpay"}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                />
-                            </label>
-
-                            {/* COD */}
-
-                            <label
-                                className={`flex justify-between items-center p-4 rounded-xl border cursor-pointer transition ${paymentMethod === "cod"
-                                    ? "border-black bg-gray-100"
-                                    : "border-gray-300 hover:border-black"
-                                    }`}
-                            >
-                                <div>
-                                    <p className="font-semibold">
-                                        Cash On Delivery
-                                    </p>
-
-                                    <p className="text-sm text-gray-500">
-                                        Pay After Delivery
-                                    </p>
-
-                                </div>
-
-                                <input
-                                    type="radio"
-                                    value="cod"
-                                    checked={paymentMethod === "cod"}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                />
-                            </label>
-
-                        </div>
-
-                        <button
-                            onClick={next}
-                            disabled={loading}
-                            className="w-full mt-8 bg-black text-white py-4 rounded-xl text-lg font-bold hover:bg-gray-800 transition disabled:bg-gray-500"
-                        >
-                            {loading ? "Processing..." : "PLACE ORDER"}
-                        </button>
-
                     </div>
-
                 </div>
             </div>
         </>
-    )
+    );
 }

@@ -2,9 +2,20 @@ const Stripe = require("stripe");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
- const createSession = async (req, res) => {
+const createSession = async (req, res) => {
   try {
     const { product, quantity } = req.body;
+
+    console.log("PRODUCT:", product);
+    console.log("QUANTITY:", quantity);
+    console.log("CLIENT URL:", process.env.CLIENT_URL);
+
+    if (!product) {
+      return res.status(400).json({
+        success: false,
+        message: "Product is required",
+      });
+    }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -16,13 +27,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
             product_data: {
               name: product.name,
-              images: [product.image], // use image, not images
+              images: product.image ? [product.image] : [],
             },
 
-            unit_amount: product.price * 100,
+            unit_amount: Math.round(Number(product.price) * 100),
           },
 
-          quantity: quantity,
+          quantity: Number(quantity) || 1,
         },
       ],
 
@@ -33,12 +44,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
       cancel_url: `${process.env.CLIENT_URL}/payment`,
     });
 
-    res.json({
+    console.log("STRIPE SESSION CREATED:", session.id);
+
+    res.status(200).json({
       success: true,
       url: session.url,
     });
+
   } catch (error) {
-    console.log(error);
+    console.log("STRIPE ERROR:", error);
 
     res.status(500).json({
       success: false,
@@ -47,6 +61,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   }
 };
 
-module.exports={
-    createSession
-}
+module.exports = {
+  createSession,
+};

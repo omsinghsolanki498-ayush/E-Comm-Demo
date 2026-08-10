@@ -14,71 +14,169 @@ function Login() {
     password: "",
   });
 
+  // ==========================================
+  // HANDLE INPUT CHANGE
+  // ==========================================
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
+  // ==========================================
+  // LOGIN
+  // ==========================================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const email = formData.email.trim().toLowerCase();
+    const password = formData.password;
+
+    console.log("FORM DATA:", {
+      email,
+      password: password ? "********" : "",
+    });
+
+    // ==========================================
+    // VALIDATION
+    // ==========================================
+
+    if (!email) {
+      toast.error("Please enter email");
+      return;
+    }
+
+    if (!password) {
+      toast.error("Please enter password");
+      return;
+    }
+
     try {
+      console.log("SENDING LOGIN REQUEST...");
+
       const res = await axios.post(
         "http://localhost:3002/api/auth/login",
-        formData,
+        {
+          email,
+          password,
+        },
         {
           withCredentials: true,
         }
       );
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem(
-        "user",
-        JSON.stringify(res.data.user)
-      );
-      localStorage.setItem(
-        "role",
-        res.data.user.role
-      );
+      console.log("LOGIN STATUS:", res.status);
+      console.log("LOGIN RESPONSE:", res.data);
+
+      // ==========================================
+      // SAVE TOKEN
+      // ==========================================
+
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
+
+      // ==========================================
+      // SAVE USER
+      // ==========================================
+
+      if (res.data.user) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify(res.data.user)
+        );
+
+        // ==========================================
+        // SAVE ROLE
+        // ==========================================
+
+        localStorage.setItem(
+          "role",
+          res.data.user.role || "user"
+        );
+      }
 
       toast.success("Login Successful");
 
+      // ==========================================
+      // REDIRECT
+      // ==========================================
+
       setTimeout(() => {
-        if (res.data.user.role === "admin") {
+        if (res.data.user?.role === "admin") {
           navigate("/admin");
         } else {
           navigate("/dashboard");
         }
-      }, 1000);
+      }, 500);
 
     } catch (err) {
+      console.log(
+        "LOGIN STATUS:",
+        err.response?.status
+      );
+
+      console.log(
+        "LOGIN RESPONSE:",
+        err.response?.data
+      );
+
+      console.log(
+        "LOGIN ERROR:",
+        err.message
+      );
+
       toast.error(
-        err.response?.data?.message || "Login Failed"
+        err.response?.data?.message ||
+        "Login Failed"
       );
     }
   };
 
+  // ==========================================
+  // UI
+  // ==========================================
+
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen flex items-center justify-center">
 
-      <div className="w-full max-w-md bg-white rounded-2xl p-8 shadow-xl">
+      <form
+        onSubmit={handleSubmit}
+        className="
+          w-full
+          max-w-[420px]
+          space-y-5
+          p-8
+        "
+      >
 
-        <h1 className="text-4xl font-bold text-center">
-          LOGIN
-        </h1>
+        {/* HEADING */}
 
-        <p className="text-center text-gray-500 mt-2 mb-8">
-          Sign in to your account
-        </p>
+        <div className="text-center">
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-5"
-        >
+          <h1 className="text-4xl font-bold">
+            LOGIN
+          </h1>
 
-          {/* EMAIL */}
+          <p className="text-gray-500 mt-2">
+            Sign in to your account
+          </p>
+
+        </div>
+
+        {/* EMAIL */}
+
+        <div>
+
+          <label className="block mb-2 font-medium">
+            Email
+          </label>
+
           <input
             type="email"
             name="email"
@@ -90,15 +188,26 @@ function Login() {
               border
               border-gray-300
               p-4
-              rounded-xl
+              rounded-lg
               outline-none
-              focus:ring-2
+              focus:border-black
+              focus:ring-1
               focus:ring-black
+              transition
             "
             required
           />
 
-          {/* PASSWORD */}
+        </div>
+
+        {/* PASSWORD */}
+
+        <div>
+
+          <label className="block mb-2 font-medium">
+            Password
+          </label>
+
           <div className="relative">
 
             <input
@@ -112,10 +221,13 @@ function Login() {
                 border
                 border-gray-300
                 p-4
-                rounded-xl
+                pr-14
+                rounded-lg
                 outline-none
-                focus:ring-2
+                focus:border-black
+                focus:ring-1
                 focus:ring-black
+                transition
               "
               required
             />
@@ -123,13 +235,16 @@ function Login() {
             <button
               type="button"
               onClick={() =>
-                setShowPassword(!showPassword)
+                setShowPassword((prev) => !prev)
               }
               className="
                 absolute
                 right-4
                 top-1/2
                 -translate-y-1/2
+                text-gray-500
+                hover:text-black
+                transition
               "
             >
               {showPassword ? (
@@ -141,48 +256,51 @@ function Login() {
 
           </div>
 
-          {/* LOGIN BUTTON */}
-          <button
-            type="submit"
+        </div>
+
+        {/* LOGIN BUTTON */}
+
+        <button
+          type="submit"
+          className="
+            w-full
+            py-4
+            rounded-2xl
+            font-bold
+            border-2
+            border-black
+            bg-white
+            text-black
+            hover:bg-black
+            hover:text-white
+            transition
+            duration-300
+          "
+        >
+          LOGIN
+        </button>
+
+        {/* REGISTER */}
+
+        <p className="text-center text-gray-600">
+
+          Don't have an account?
+
+          <Link
+            to="/register"
             className="
-              w-full
-              border-2
-              border-black
-              py-4
-              rounded-xl
+              ml-2
               font-bold
-              bg-black
-              text-white
-              hover:bg-gray-800
-              transition
+              text-black
+              hover:underline
             "
           >
-            LOGIN
-          </button>
+            Register
+          </Link>
 
-          {/* REGISTER */}
-          <p className="text-center text-gray-600">
+        </p>
 
-            Don't have an account?
-
-            <Link
-              to="/register"
-              className="
-                ml-2
-                font-bold
-                text-black
-                cursor-pointer
-                hover:underline
-              "
-            >
-              Register
-            </Link>
-
-          </p>
-
-        </form>
-
-      </div>
+      </form>
 
     </div>
   );
