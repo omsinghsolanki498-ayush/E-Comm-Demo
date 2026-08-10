@@ -396,7 +396,6 @@
 
 // export default Product;
 
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -492,6 +491,7 @@ function Product() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+
       {/* ================= NAVBAR ================= */}
       <nav className="sticky top-0 z-50 bg-black text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -723,6 +723,7 @@ function Product() {
                   </div>
 
                 </div>
+
               </div>
             ))}
 
