@@ -59,7 +59,7 @@ function Product() {
 
     try {
       await axios.delete(
-        `http://localhost:3002/api/product/delete/${id}`,
+        `${API}/api/product/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
