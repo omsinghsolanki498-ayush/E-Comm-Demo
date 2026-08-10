@@ -7,14 +7,15 @@ const cors = require("cors");
 const app = express();
 
 // ================= DATABASE =================
-
 connectDb();
 
 // ================= MIDDLEWARE =================
-
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://e-comm-demo-five.vercel.app",
+    ],
     credentials: true,
   })
 );
@@ -27,45 +28,29 @@ app.use(
   })
 );
 
+// ================= HEALTH CHECK =================
+app.get("/", (req, res) => {
+  res.json({
+    message: "E-Commerce Backend is running",
+  });
+});
+
 // ================= ROUTES =================
+app.use("/api/auth", require("./router/AuthRoute"));
 
-app.use(
-  "/api/auth",
-  require("./router/AuthRoute")
-);
+app.use("/api/product", require("./router/ProductRoute"));
 
-app.use(
-  "/api/product",
-  require("./router/ProductRoute")
-);
+app.use("/api/paymentverify", require("./router/paymentRoute"));
 
-app.use(
-  "/api/paymentverify",
-  require("./router/paymentRoute")
-);
+app.use("/api/stripe", require("./router/stripe"));
 
-app.use(
-  "/api/stripe",
-  require("./router/stripe")
-);
+app.use("/api/order", require("./router/orderRoute"));
 
-app.use(
-  "/api/order",
-  require("./router/orderRoute")
-);
+app.use("/api/product", require("./router/otherproduct"));
 
-app.use(
-  "/api/product",
-  require("./router/otherproduct")
-);
-
-app.use(
-  "/api/admin",
-  require("./router/Adminusers")
-);
+app.use("/api/admin", require("./router/Adminusers"));
 
 // ================= SERVER =================
-
 const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, () => {
