@@ -396,7 +396,7 @@
 
 // export default Product;
 
-``
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -415,7 +415,6 @@ const API = import.meta.env.VITE_API_URL;
 
 function Product() {
   const navigate = useNavigate();
-
   const token = localStorage.getItem("token");
 
   const [products, setProducts] = useState([]);
@@ -467,7 +466,6 @@ function Product() {
         },
       });
 
-      // Remove deleted product from UI
       setProducts((prevProducts) =>
         prevProducts.filter((item) => item._id !== id)
       );
@@ -497,7 +495,9 @@ function Product() {
       {/* ================= NAVBAR ================= */}
       <nav className="sticky top-0 z-50 bg-black text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
           <div className="h-16 flex items-center justify-between">
+
             {/* Logo */}
             <Link
               to="/admin"
@@ -514,6 +514,7 @@ function Product() {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center gap-3">
+
               <Link
                 to="/admin"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
@@ -529,6 +530,7 @@ function Product() {
                 <Plus size={18} />
                 Add Product
               </Link>
+
             </div>
 
             {/* Mobile Menu Button */}
@@ -543,11 +545,13 @@ function Product() {
                 <Menu size={24} />
               )}
             </button>
+
           </div>
 
           {/* Mobile Menu */}
           {menuOpen && (
             <div className="md:hidden pb-4 space-y-2">
+
               <Link
                 to="/admin"
                 onClick={() => setMenuOpen(false)}
@@ -565,15 +569,19 @@ function Product() {
                 <Plus size={18} />
                 Add Product
               </Link>
+
             </div>
           )}
+
         </div>
       </nav>
 
       {/* ================= MAIN CONTENT ================= */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
               Products
@@ -593,6 +601,7 @@ function Product() {
               {products.length}
             </p>
           </div>
+
         </div>
 
         {/* ================= LOADING ================= */}
@@ -605,6 +614,7 @@ function Product() {
         {/* ================= EMPTY ================= */}
         {!loading && products.length === 0 && (
           <div className="bg-white rounded-2xl shadow-sm p-10 text-center">
+
             <Package
               size={60}
               className="mx-auto text-gray-300 mb-4"
@@ -625,19 +635,23 @@ function Product() {
               <Plus size={18} />
               Add Product
             </Link>
+
           </div>
         )}
 
         {/* ================= PRODUCT GRID ================= */}
         {!loading && products.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
+
             {products.map((item) => (
               <div
                 key={item._id}
                 className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group"
               >
+
                 {/* Product Image */}
                 <div className="relative overflow-hidden bg-gray-100">
+
                   <img
                     src={item.image}
                     alt={item.name || "Product"}
@@ -652,10 +666,12 @@ function Product() {
                   <span className="absolute top-3 left-3 bg-black text-white text-xs font-semibold px-3 py-1.5 rounded-full">
                     {item.category || "Product"}
                   </span>
+
                 </div>
 
                 {/* Product Details */}
                 <div className="p-5">
+
                   <h2 className="text-lg font-bold text-gray-900 line-clamp-1">
                     {item.name || "Unnamed Product"}
                   </h2>
@@ -666,6 +682,7 @@ function Product() {
 
                   {/* Price */}
                   <div className="flex items-center justify-between mt-4">
+
                     <p className="text-xl font-bold text-black">
                       ₹{item.price || 0}
                     </p>
@@ -673,10 +690,12 @@ function Product() {
                     <span className="text-xs text-gray-400">
                       Product
                     </span>
+
                   </div>
 
                   {/* Buttons */}
                   <div className="grid grid-cols-2 gap-3 mt-5">
+
                     {/* Edit */}
                     <button
                       type="button"
@@ -700,12 +719,16 @@ function Product() {
                       <Trash2 size={17} />
                       Delete
                     </button>
+
                   </div>
+
                 </div>
               </div>
             ))}
+
           </div>
         )}
+
       </main>
     </div>
   );
