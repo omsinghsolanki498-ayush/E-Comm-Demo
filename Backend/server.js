@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 
 const express = require("express");
 const connectDb = require("./config/DataBase");
@@ -9,17 +9,34 @@ const app = express();
 // ================= DATABASE =================
 connectDb();
 
-// ================= MIDDLEWARE =================
+// ================= CORS =================
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://e-comm-demo-five.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://e-comm-demo-five.vercel.app",
-    ],
+    origin: function (origin, callback) {
+      // Allow requests without origin, e.g. Postman/server requests
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.log("Blocked CORS Origin:", origin);
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
+// ================= MIDDLEWARE =================
 app.use(express.json());
 
 app.use(
@@ -37,17 +54,11 @@ app.get("/", (req, res) => {
 
 // ================= ROUTES =================
 app.use("/api/auth", require("./router/AuthRoute"));
-
 app.use("/api/product", require("./router/ProductRoute"));
-
 app.use("/api/paymentverify", require("./router/paymentRoute"));
-
 app.use("/api/stripe", require("./router/stripe"));
-
 app.use("/api/order", require("./router/orderRoute"));
-
 app.use("/api/product", require("./router/otherproduct"));
-
 app.use("/api/admin", require("./router/Adminusers"));
 
 // ================= SERVER =================
