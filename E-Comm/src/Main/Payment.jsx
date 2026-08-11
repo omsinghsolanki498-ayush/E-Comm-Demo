@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+
 const API = import.meta.env.VITE_API_URL;
 
 export default function Payment() {
@@ -329,7 +330,9 @@ const codOrder = async () => {
         },
       });
 
-    } else {
+      return;
+    } 
+    else {
       toast.error(
         data.message || "COD Order Failed"
       );
