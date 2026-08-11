@@ -50,7 +50,7 @@ function OrderSuccess() {
         )}
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/dashboard")}
           className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
         >
           Continue Shopping
