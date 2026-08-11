@@ -7,6 +7,7 @@ import Dashboard from "./Main/Dashboard";
 import AddCart from "./Main/AddCart";
 import Payment from "./Main/Payment";
 import Checkout from "./Main/Checkout";
+import OrderSuccess from "./Main/OrderSuccess";
 
 // Protected Routes
 import Protected from "./Protected/Protecte";
@@ -51,6 +52,11 @@ function App() {
         <Route
           path="/AddCart/:id"
           element={<AddCart />}
+        />
+
+        <Route
+          path="/order-success"
+          element={<OrderSuccess />}
         />
 
         <Route
@@ -130,7 +136,7 @@ function App() {
           }
         />
 
-       
+
 
       </Routes>
     </BrowserRouter>
